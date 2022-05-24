@@ -6,23 +6,36 @@ using learningSystem.Entities;
 
 namespace learningSystem.Controllers
 {
-    [Route("api/course")]
+    [Route("api/quiz")]
     [ApiController]
-    public class CourseMainController : ControllerBase
+    public class QuizController : ControllerBase
     {
-        private readonly ICourseMainService _courseMainService;
-        public CourseMainController(ICourseMainService courseMainService)
+        private readonly IQuizService _quizService;
+        public QuizController(IQuizService quizService)
         {
-            _courseMainService = courseMainService;
+            _quizService = quizService;
         }
 
-        [HttpGet]
-        public ActionResult<List<CourseMain>> GetAll()
+        [HttpGet("{id}")]
+        public ActionResult<List<QuizDto>> GetAll([FromRoute] int id)
         {
-            var courses = _courseMainService.GetAll();
-            return Ok(courses);
+            var quiz = _quizService.GetAll(id);
+            return Ok(quiz);
         }
+        [HttpGet("{id}/questions")]
+        public ActionResult<List<QuestionDto>> GetQuizQuestions([FromRoute] int id)
+        {
+            var questions = _quizService.GetQuestions(id);
+            return Ok(questions);
+        }
+        [HttpPost("{id}/check")]
+        public ActionResult<ScoreDto> CheckAnswers([FromRoute] int id, [FromBody] List<QuestionDto> dto)
+        {
+            var score = _quizService.CheckAnswers(dto, id);
+            return Ok(score);
 
+        }
+        /*
         [HttpGet("{id}")]
         public ActionResult<CourseMain> Get(int id)
         {
@@ -48,6 +61,6 @@ namespace learningSystem.Controllers
             _courseMainService.Update(id, course);
             return Ok();
         }
-
+        */
     }
 }

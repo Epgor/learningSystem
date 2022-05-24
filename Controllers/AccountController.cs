@@ -62,5 +62,13 @@ namespace learningSystem.Controllers
             var users = _accountService.GetUsers();
             return Ok(users);
         }
+
+        [HttpGet("learningtype/{userId}")]
+        [AllowAnonymous]
+        public ActionResult<int> GetUserLearningType([FromRoute] int userId)
+        {
+            var type = _accountService.GetLearinngType(userId);
+            return Ok(type);
+        }
     }
 }

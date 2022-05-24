@@ -23,6 +23,9 @@ namespace learningSystem.Services
 
         UserDto GetUser(int userId);
         List<UserDto> GetUsers();
+        public void SetLearinngType(int userId, int typeId);
+        public int GetLearinngType(int id);
+
     }
     public class AccountService : IAccountService
     {
@@ -74,19 +77,20 @@ namespace learningSystem.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.Name}"),
-                new Claim(ClaimTypes.Role, $"{user.Role.Name}")
+                new Claim(ClaimTypes.Role, $"{user.Role.Name}"),
+                new Claim(ClaimTypes.Version, $"{user.LearingType}"),
             };
             if (user.DateOfBirth is not null)
             {
                 claims.Add(new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
             }
-            
+
             //key & credentials
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8
                 .GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(
-                key, 
+                key,
                 SecurityAlgorithms.HmacSha256);
             //expiration (val's in json)
             var expires = DateTime.Now.AddDays(
@@ -146,6 +150,33 @@ namespace learningSystem.Services
             var usersDto = mapper.Map<List<UserDto>>(users);
 
             return usersDto;
+
+        }
+
+        public int GetLearinngType(int id)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(c => c.Id == id);
+
+            if (user is null)
+                return 0;
+
+            return user.LearingType;
+        }
+        public void SetLearinngType(int userId, int typeId)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(c => c.Id == userId);
+
+            if (user is null)
+            {
+                throw new NotFoundException("User does not exist!");
+            }
+
+            user.LearingType = typeId;
+            _context.SaveChanges();
 
         }
     }

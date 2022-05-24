@@ -21,6 +21,10 @@ namespace RestaurantAPI
             CreateMap<TaskDto, learningSystem.Entities.Task>();
 
             CreateMap<UpdateTaskDto, learningSystem.Entities.Task>();
+
+            CreateMap<Quiz, QuizDto>()
+                .ForMember(m => m.id, c => c.MapFrom(s => s.Id))
+                .ForMember(m => m.text, c => c.MapFrom(s => s.Text));
         }
     }
 }

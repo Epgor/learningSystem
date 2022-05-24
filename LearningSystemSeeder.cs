@@ -64,7 +64,260 @@ namespace learningSystem
                     _dbContext.Articles.AddRange(articles);
                     _dbContext.SaveChanges();
                 }
+                if (!_dbContext.Quizes.Any())
+                {
+                    var quizzes = GetQuizzes();
+                    _dbContext.Quizes.AddRange(quizzes);
+                    _dbContext.SaveChanges();
+                }
+                if (!_dbContext.Questions.Any())
+                {
+                    var questions = GetQuestions();
+                    _dbContext.Questions.AddRange(questions);
+                    _dbContext.SaveChanges();
+                }
+                
+                if (!_dbContext.Answers.Any())
+                {
+                    var answers = GetAnswers();
+                    _dbContext.Answers.AddRange(answers);
+                    _dbContext.SaveChanges();
+                }
+                
             }
+        }
+
+        private IEnumerable<Answer> GetAnswers()
+        {
+            var answers = new List<Answer>()
+            {
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 1/1",
+                    IsCorrect = true,
+                    questionId = 1,
+                },
+                
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 1/2",
+                    IsCorrect = false,
+                    questionId = 1,
+                },
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 1/3",
+                    IsCorrect = true,
+                    questionId = 1,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 1/4",
+                    IsCorrect = false,
+                    questionId = 1,
+                },
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 1/5",
+                    IsCorrect = true,
+                    questionId = 1,
+                },
+                
+                //pytanie 2
+                 new Answer()
+                {
+                    Text = "Dobra odpowiedz 2/1",
+                    IsCorrect = true,
+                    questionId = 2,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 2/2",
+                    IsCorrect = false,
+                    questionId = 2,
+                },
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 2/3",
+                    IsCorrect = true,
+                    questionId = 2,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 2/4",
+                    IsCorrect = false,
+                    questionId = 2,
+                },
+                //pytanie 3
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 3/1",
+                    IsCorrect = true,
+                    questionId = 3,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 3/2",
+                    IsCorrect = false,
+                    questionId = 3,
+                },
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 3/3",
+                    IsCorrect = true,
+                    questionId = 3,
+                },
+                //pytanie 4
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 4/1",
+                    IsCorrect = true,
+                    questionId = 4,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 4/2",
+                    IsCorrect = false,
+                    questionId = 4,
+                },
+                //pytanie 5
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 5/1",
+                    IsCorrect = true,
+                    questionId = 5,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 5/2",
+                    IsCorrect = false,
+                    questionId = 5,
+                },
+                //pytanie 1 css
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 6/1",
+                    IsCorrect = true,
+                    questionId = 6,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 6/2",
+                    IsCorrect = false,
+                    questionId = 6,
+                },
+                //pytanie 2 css
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 7/1",
+                    IsCorrect = true,
+                    questionId = 7,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 7/2",
+                    IsCorrect = false,
+                    questionId = 7,
+                },
+                //pytanie 3 css
+                new Answer()
+                {
+                    Text = "Dobra odpowiedz 8/1",
+                    IsCorrect = true,
+                    questionId = 8,
+                },
+                new Answer()
+                {
+                    Text = "Zla odpowiedz 8/2",
+                    IsCorrect = false,
+                    questionId = 8,
+                },
+                
+            };
+            return answers;
+        }
+
+        private IEnumerable<Question> GetQuestions()
+        {
+            var questions = new List<Question>()
+            {
+                new Question()
+                {
+                    Text = "Pierwsze pytanie HTML q1",
+                    quizId = 1, 
+                },
+                new Question()
+                {
+                    Text = "Drugie pytanie HTML q1",
+                    quizId = 1,
+                },
+                new Question()
+                {
+                    Text = "Trzecie pytanie HTML q1",
+                    quizId = 1,
+                },
+                new Question()
+                {
+                    Text = "Czwarte pytanie HTML q1",
+                    quizId = 1,
+                },
+                new Question()
+                {
+                    Text = "Piąte pytanie HTML q1",
+                    quizId = 1,
+                },
+                new Question()
+                {
+                    Text = "Pierwsze pytanie CSS q1",
+                    quizId = 7,
+                },
+                new Question()
+                {
+                    Text = "Drugie pytanie CSS q1",
+                    quizId = 7,
+                },
+                new Question()
+                {
+                    Text = "Trzecie pytanie CSS q1",
+                    quizId = 7,
+                },
+            };
+            return questions;
+        }
+
+        private IEnumerable<Quiz> GetQuizzes()
+        {
+            var quizzes = new List<Quiz>()
+            {
+                new Quiz()
+                {
+                    Text = "Mój Pierwszy Quiz HTML",
+                    CourseId = 1,
+                },
+                new Quiz()
+                {
+                    Text = "Mój Drugi Quiz HTML",
+                    CourseId = 1,
+                },
+                new Quiz()
+                {
+                    Text = "Mój trzeci Quiz HTML",
+                    CourseId = 1,
+                },
+                new Quiz()
+                {
+                    Text = "Mój Pierwszy Quiz CSS",
+                    CourseId = 2,
+                },
+                new Quiz()
+                {
+                    Text = "Mój Drugi Quiz CSS",
+                    CourseId = 2,
+                },
+
+
+            };
+            return quizzes;
         }
 
         private IEnumerable<Article> GetArticles()

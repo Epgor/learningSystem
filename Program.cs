@@ -66,6 +66,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<ICourseMainService, CourseMainService>();
+builder.Services.AddScoped<IQuizService, QuizService>();
 //errors
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 

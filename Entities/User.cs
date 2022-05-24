@@ -13,7 +13,7 @@ namespace learningSystem.Entities
         public string Name { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string PasswordHash { get; set; }
-
+        public int LearingType { get; set; } = 0;
         public int RoleId { get; set; } = 1;
         public virtual Role Role { get; set; }
     }
