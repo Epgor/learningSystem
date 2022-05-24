@@ -324,23 +324,74 @@ namespace learningSystem
         {
             var articles = new List<Article>()
             {
+                /*
                 new Article()
                 {
-                    Text = "Jestem tekstem dla wzorkowca",
+                    Text = "Przykładowy tytuł lekcji ",
                     CourseId = 1,
                 },
                 new Article()
                 {
-                    Text = "Jestem tekstem dla słuchowca",
+                    Text = "Przykładowy tytuł lekcji ",
                     CourseId = 2,
                 },
                 new Article()
                 {
-                    Text = "Jestem tekstem dla działaniowca",
+                    Text = "Przykładowy tytuł lekcji ",
                     CourseId = 3,
                     
                 },
-                
+                */
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 1,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 1,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 1,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 1,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 1,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 2,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 2,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 2,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 2,
+                },
+                new Article()
+                {
+                    Text = "Lorem Ipsum, dolor est",
+                    CourseId = 2,
+                },
             };
             //var arti = _dbContext.Articles.Where(a => a.CourseId == 1 );//exampole linq
         return articles;

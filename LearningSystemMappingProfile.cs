@@ -25,6 +25,10 @@ namespace RestaurantAPI
             CreateMap<Quiz, QuizDto>()
                 .ForMember(m => m.id, c => c.MapFrom(s => s.Id))
                 .ForMember(m => m.text, c => c.MapFrom(s => s.Text));
+
+            CreateMap<Article, ArticleDto>()
+                .ForMember(m => m.id, c => c.MapFrom(s => s.Id))
+                .ForMember(m => m.text, c => c.MapFrom(s => s.Text));
         }
     }
 }
