@@ -16,5 +16,6 @@ namespace learningSystem.Entities
         public int LearingType { get; set; } = 0;
         public int RoleId { get; set; } = 1;
         public virtual Role Role { get; set; }
+
     }
 }

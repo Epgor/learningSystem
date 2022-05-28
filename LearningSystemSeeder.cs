@@ -52,12 +52,7 @@ namespace learningSystem
                     _dbContext.CoursesMain.AddRange(courses);
                     _dbContext.SaveChanges();
                 }
-                if (!_dbContext.CoursesDetail.Any())
-                {
-                    var courses = GetCourseDetails();
-                    _dbContext.CoursesDetail.AddRange(courses);
-                    _dbContext.SaveChanges();
-                }
+
                 if (!_dbContext.Articles.Any())
                 {
                     var articles = GetArticles();
@@ -497,26 +492,6 @@ namespace learningSystem
         return articles;
         }
 
-        private IEnumerable<CourseDetail> GetCourseDetails()
-        {
-            var courseDetails = new List<CourseDetail>() 
-            {
-                new CourseDetail()
-                {
-                    Text = "Jestem Wzrokowcem"
-                },
-                new CourseDetail()
-                {
-                    Text = "Jestem Słuchowcem"
-                },
-                new CourseDetail()
-                {
-                    Text = "Jestem Działaniowcem"
-                }
-            };
-            return courseDetails;
-
-        }
 
         private IEnumerable<CourseMain> GetCourses()
         {

@@ -17,7 +17,6 @@ namespace learningSystem.Entities
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<CourseDetail> CoursesDetail {  get; set; }
         public DbSet<CourseMain> CoursesMain { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Quiz> Quizes { get; set; }
