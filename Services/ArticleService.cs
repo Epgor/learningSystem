@@ -14,6 +14,10 @@ namespace learningSystem.Services
         public void Update(int id, ArticleDto articleDto);
         public void Delete(int id);
         public int Add(int courseId, ArticleDto articleDto);
+        public int CreateBlock(int articleId, ArticleBlockDto articleBlockDto);
+        public void DeleteBlock(int blockId);
+        public void MoveBlock(List<ArticleBlockDto> articleBlocks);
+        public void UpdateBlock(ArticleBlockDto articleBlockDto);
 
     }
 
@@ -32,6 +36,69 @@ namespace learningSystem.Services
             _mapper = mapper;
             _authorizationService = authorizationService;
             _userContextService = userContextService;
+        }
+        public void UpdateBlock(ArticleBlockDto articleBlockDto)
+        {
+            var block = _dbContext
+                    .ArticleBlocks
+                    .FirstOrDefault(bloc => bloc.id == articleBlockDto.id);
+
+            if (block == null)
+                throw new NotFoundException("Article block not found");
+
+            block.title = articleBlockDto.title;
+            block.content = articleBlockDto.content;
+
+            _dbContext.SaveChanges();
+
+        }
+        public void MoveBlock(List<ArticleBlockDto> articleBlocks)
+        {
+            foreach(var blockDto in articleBlocks)
+            {
+                var block = _dbContext
+                    .ArticleBlocks
+                    .FirstOrDefault(bloc => bloc.id == blockDto.id);
+
+                if (block != null)
+                    block.query = blockDto.query;
+            }
+            _dbContext.SaveChanges();
+        }
+        public void DeleteBlock(int blockId)
+        {
+            var block = _dbContext
+                .ArticleBlocks
+                .FirstOrDefault(bloc => bloc.id == blockId);
+
+            if (block != null)
+                _dbContext.ArticleBlocks.Remove(block);
+
+            _dbContext.SaveChanges();
+        }
+        public int CreateBlock(int articleId, ArticleBlockDto articleBlockDto)
+        {
+            if (articleBlockDto is null)
+                throw new BadRequestException("Incorrect input articleBlock");
+
+            var article = _dbContext
+                .Articles
+                .FirstOrDefault(r => r.Id == articleId);
+
+            if (article == null)
+                throw new NotFoundException("Article not found");
+
+            ArticleBlock articleBlock = new ArticleBlock()
+            {
+                title = articleBlockDto.title,
+                content = articleBlockDto.content,
+                type = articleBlockDto.type,
+                query = articleBlockDto.query,
+                Article = article,
+            };
+
+            _dbContext.SaveChanges();
+            return articleBlock.id;
         }
 
         public int Add(int courseId, ArticleDto articleDto)

@@ -16,25 +16,18 @@ namespace learningSystem.Controllers
             _articleService = articleService;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<List<ArticleDto>> GetAll([FromRoute] int id)
-        {
-            var article = _articleService.GetAll(id);
-            return Ok(article);
-        }
-
-        [HttpGet("blocks/{id}")]
-        public ActionResult<List<ArticleBlockDto>> GetBlocks([FromRoute] int id)
-        {
-            var article = _articleService.GetArticleBlocks(id);
-            return Ok(article);
-        }
-
         [HttpPost("{courseId}")]
         public ActionResult Create([FromRoute] int courseId, [FromBody] ArticleDto articleDto)
         {
             int id = _articleService.Add(courseId, articleDto);
             return Created($"/api/article/{id}", null);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<List<ArticleDto>> GetAll([FromRoute] int id)
+        {
+            var article = _articleService.GetAll(id);
+            return Ok(article);
         }
 
         [HttpPut("{articleId}")]
@@ -50,5 +43,47 @@ namespace learningSystem.Controllers
             _articleService.Delete(articleId);
             return NoContent();
         }
+        /// <summary>
+        /// ////////////////////
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="articleBlockDto"></param>
+        /// <returns></returns>
+        [HttpPost("blocks/{articleId}")]
+        public ActionResult CreateBlock([FromRoute]int articleId, [FromBody] ArticleBlockDto articleBlockDto)
+        {
+            var block = _articleService.CreateBlock(articleId, articleBlockDto);
+            return Created($"/api/article/{block}", null);
+        }
+
+        [HttpGet("blocks/{articleId}")]
+        public ActionResult<List<ArticleBlockDto>> GetBlocks([FromRoute] int articleId)
+        {
+            var articleBlocks = _articleService.GetArticleBlocks(articleId);
+            return Ok(articleBlocks);
+        }
+
+        [HttpPut("blocks")]
+        public ActionResult UpdateBlock([FromBody] ArticleBlockDto articleBlockDto)
+        {
+            _articleService.UpdateBlock(articleBlockDto);
+            return NoContent();
+        }
+        [HttpPatch("blocks")]
+        public ActionResult MoveBlocks([FromBody] List<ArticleBlockDto> articleBlocks)
+        {
+            _articleService.MoveBlock(articleBlocks);
+            return Ok();
+        }
+
+        [HttpDelete("blocks/{blockId}")]
+        public ActionResult DeleteBlock([FromRoute] int blockId)
+        {
+            _articleService.DeleteBlock(blockId);
+            return NoContent();
+        }
+
+
+
     }
 }
