@@ -29,6 +29,9 @@ namespace RestaurantAPI
             CreateMap<Article, ArticleDto>()
                 .ForMember(m => m.id, c => c.MapFrom(s => s.Id))
                 .ForMember(m => m.text, c => c.MapFrom(s => s.Text));
+
+            CreateMap<ArticleBlock, ArticleBlockDto>();
+
         }
     }
 }

@@ -9,6 +9,7 @@ namespace learningSystem.Services
     public interface IArticleService
     {
         public List<ArticleDto> GetAll(int id);
+        public List<ArticleBlockDto> GetArticleBlocks(int articleId);
 
         //public void Update(int id, CourseMain mainObj);
         //public void Delete(int id);
@@ -39,12 +40,28 @@ namespace learningSystem.Services
                 .Where(x => x.CourseId == courseId)
                 .ToList();
 
+            if (articles is null)
+                throw new NotFoundException("Content not found");
+
             var articlesDto = _mapper.Map<List<ArticleDto>>(articles); 
 
             return articlesDto;
         }
 
+        public List<ArticleBlockDto> GetArticleBlocks(int articleId)
+        {
+            var blocks = _dbContext
+                .ArticleBlocks
+                .Where(x => x.ArticleId == articleId)
+                .ToList();
 
+            if (blocks is null)
+                throw new NotFoundException("Content not found");
+
+            var blocksDto = _mapper.Map<List<ArticleBlockDto>>(blocks);
+
+            return blocksDto;
+        }
         public void Delete(int id)
         {
 

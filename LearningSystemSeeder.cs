@@ -83,8 +83,108 @@ namespace learningSystem
                     _dbContext.Answers.AddRange(answers);
                     _dbContext.SaveChanges();
                 }
+
+                if (!_dbContext.ArticleBlocks.Any())
+                {
+                    var blocks = GetBlocks();
+                    _dbContext.ArticleBlocks.AddRange(blocks);
+                    _dbContext.SaveChanges();
+                }
                 
             }
+        }
+
+        private IEnumerable<ArticleBlock> GetBlocks()
+        {
+            var blocks = new List<ArticleBlock>()
+            {
+                
+                new ArticleBlock()
+                {
+                    title = "Pierwszy blok",
+                    type = 1,
+                    content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                    "Phasellus sed augue in lorem convallis suscipit vitae in odio." +
+                    " Praesent facilisis venenatis nunc, et tincidunt tellus. " +
+                    "Nullam a est eu erat euismod egestas. Aliquam molestie convallis mattis." +
+                    " Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; " +
+                    "Vivamus efficitur lectus sit amet neque commodo tristique. " +
+                    "Sed massa libero, lobortis non dolor sed, egestas semper neque. " +
+                    "Integer id massa vehicula est vestibulum laoreet.",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Drugi blok",
+                    type =1,
+                    content = "In lectus neque, viverra ut tempor quis, tincidunt id velit. " +
+                    "Fusce mauris lorem, finibus a pulvinar sit amet, suscipit sed mauris." +
+                    " Morbi faucibus diam diam, porta tempus diam auctor ac. Praesent ut tincidunt massa." +
+                    " Aenean at mi ante. Nunc a odio malesuada, scelerisque velit eget, gravida elit." +
+                    " Maecenas quam risus, consequat ac quam porta, fermentum faucibus eros. " +
+                    "Maecenas ornare dolor erat, nec dapibus eros interdum sed.",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Trzeci blok",
+                    type=1,
+                    content = "Fusce bibendum suscipit odio. " +
+                    "Integer ornare, nisi et viverra gravida, odio lacus posuere nisi, et sodales mauris nisi quis lacus." +
+                    " Nulla vulputate massa blandit tellus bibendum consequat." +
+                    " Morbi lorem enim, iaculis et scelerisque et, luctus congue turpis." +
+                    " Duis nec lorem nec tellus vestibulum porttitor ac sed lacus." +
+                    " Integer ligula orci, posuere sit amet mauris a, ullamcorper ullamcorper lectus." +
+                    " Maecenas non quam felis.",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Foto blok",
+                    type = 2,
+                    content = "https://localhost:7038/image/image2.jpg",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Trzeci piąty",
+                    type=1,
+                    content = "Fusce bibendum suscipit odio. " +
+                    "Integer ornare, nisi et viverra gravida, odio lacus posuere nisi, et sodales mauris nisi quis lacus." +
+                    " Nulla vulputate massa blandit tellus bibendum consequat." +
+                    " Morbi lorem enim, iaculis et scelerisque et, luctus congue turpis." +
+                    " Duis nec lorem nec tellus vestibulum porttitor ac sed lacus." +
+                    " Integer ligula orci, posuere sit amet mauris a, ullamcorper ullamcorper lectus." +
+                    " Maecenas non quam felis.",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Foto blok",
+                    type = 2,
+                    content = "https://localhost:7038/image/image3.jpg",
+                    ArticleId = 1,
+                },
+                new ArticleBlock()
+                {
+                    title = "Trzeci piąty",
+                    type=1,
+                    content = "Fusce bibendum suscipit odio. " +
+                    "Integer ornare, nisi et viverra gravida, odio lacus posuere nisi, et sodales mauris nisi quis lacus." +
+                    " Nulla vulputate massa blandit tellus bibendum consequat." +
+                    " Maecenas non quam felis.",
+                    ArticleId = 1,
+                },
+                
+                new ArticleBlock()
+                {
+                    title = "Pdf blok",
+                    type = 3,
+                    content = "https://localhost:7038/file/111.pdf",
+                    ArticleId = 1,
+                },
+            };
+            return blocks;
         }
 
         private IEnumerable<Answer> GetAnswers()

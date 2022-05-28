@@ -25,6 +25,8 @@ namespace learningSystem.Entities
         public DbSet<Answer> Answers { get; set; }
         public DbSet<CourseFile> CourseFiles { get; set; }
 
+        public DbSet<ArticleBlock> ArticleBlocks { get; set; }
+
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

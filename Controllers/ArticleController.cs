@@ -23,5 +23,11 @@ namespace learningSystem.Controllers
             return Ok(article);
         }
 
+        [HttpGet("blocks/{id}")]
+        public ActionResult<List<ArticleBlockDto>> GetBlocks([FromRoute] int id)
+        {
+            var article = _articleService.GetArticleBlocks(id);
+            return Ok(article);
+        }
     }
 }
