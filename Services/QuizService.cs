@@ -11,9 +11,9 @@ namespace learningSystem.Services
         public List<QuizDto> GetAll(int id);
         public List<QuestionDto> GetQuestions(int quizId);
         public ScoreDto CheckAnswers(List<QuestionDto> Answers, int id);
-        //public void Update(int id, CourseMain mainObj);
-        //public void Delete(int id);
-        //public int Add(CourseMain mainObj);
+        public void Update(int id, QuizDto quizDto);
+        public void Delete(int id);
+        public int Add(int courseId, QuizDto quizDto);
 
     }
 
@@ -33,6 +33,27 @@ namespace learningSystem.Services
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+        public int Add(int courseId, QuizDto quizDto)
+        {
+            if (quizDto is null)
+                throw new BadRequestException("Got wrong input data, operation - CREATE Quiz");
+
+            CourseMain course = _dbContext.CoursesMain.First(x => x.Id == courseId);
+
+            if (course is null)
+                throw new NotFoundException("Course with provided Id does not exist, operation - CREATE Quiz");
+
+            Quiz quiz = new Quiz()
+            {
+                Text = quizDto.text,
+                LearningType = quizDto.learningType,
+                Course = course,
+            };
+            _dbContext.Quizes.Add(quiz);
+            _dbContext.SaveChanges();
+            return quiz.Id;
+        }
+
         public List<QuizDto> GetAll(int courseId)
         {
             var quizzes = _dbContext
@@ -159,28 +180,45 @@ namespace learningSystem.Services
         public void Delete(int id)
         {
 
-            var course = _dbContext
-                .CoursesMain
+            var quiz = _dbContext
+                .Quizes
                 .FirstOrDefault(r => r.Id == id);
 
-            if (course is null)
-                throw new NotFoundException("Course not found");
+            if (quiz is null)
+                throw new NotFoundException("Quiz not found");
 
             //authorize 
+            var questions = _dbContext
+                .Questions
+                .Where(question => question.quizId == quiz.Id);
 
-            _dbContext.CoursesMain.Remove(course);
+            if (questions is not null)
+            {
+                foreach (var question in questions)
+                {
+                    var answers = _dbContext
+                        .Answers
+                        .Where(answer => answer.questionId == question.Id);
+
+                    if (answers is not null)
+                        _dbContext.Answers.RemoveRange(answers);//delete answers of that question
+                }
+                _dbContext.Questions.RemoveRange(questions);//delete questions of that quiz
+            }
+                
+
+            _dbContext.Quizes.Remove(quiz);//delete quiz         
             _dbContext.SaveChanges();
         }
 
-        public void Update(int id, CourseMain mainObj)
+        public void Update(int id, QuizDto quizDto)
         {
-            var course = _dbContext.CoursesMain.FirstOrDefault(c => c.Id == id);
+            var quiz = _dbContext.Quizes.FirstOrDefault(c => c.Id == id);
 
-            if (course is null)
-                throw new NotFoundException("Course Not Found");
+            if (quiz is null)
+                throw new NotFoundException("Quiz Not Found");
 
-            course.Title = mainObj.Title;
-            course.Desc = mainObj.Desc;
+            quiz.Text = quizDto.text;
 
             _dbContext.SaveChanges();
         }

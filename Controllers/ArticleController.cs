@@ -29,5 +29,26 @@ namespace learningSystem.Controllers
             var article = _articleService.GetArticleBlocks(id);
             return Ok(article);
         }
+
+        [HttpPost("{courseId}")]
+        public ActionResult Create([FromRoute] int courseId, [FromBody] ArticleDto articleDto)
+        {
+            int id = _articleService.Add(courseId, articleDto);
+            return Created($"/api/article/{id}", null);
+        }
+
+        [HttpPut("{articleId}")]
+        public ActionResult Update([FromRoute] int articleId, [FromBody] ArticleDto articleDto)
+        {
+            _articleService.Update(articleId, articleDto);
+            return Ok();
+        }
+
+        [HttpDelete("{articleId}")]
+        public ActionResult Delete([FromRoute] int articleId)
+        {
+            _articleService.Delete(articleId);
+            return NoContent();
+        }
     }
 }

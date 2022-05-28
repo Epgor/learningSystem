@@ -35,32 +35,25 @@ namespace learningSystem.Controllers
             return Ok(score);
 
         }
-        /*
-        [HttpGet("{id}")]
-        public ActionResult<CourseMain> Get(int id)
+        [HttpPost("{courseId}")]
+        public ActionResult Create([FromRoute] int courseId, [FromBody] QuizDto quizDto)
         {
-            var course = _courseMainService.Get(id);
-            return Ok(course);
+            int id= _quizService.Add(courseId, quizDto);
+            return Created($"/api/quiz/{id}", null);
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        [HttpPut("{quizId}")]
+        public ActionResult Update([FromRoute] int quizId, [FromBody] QuizDto quizDto)
         {
-            _courseMainService.Delete(id);
-            return NoContent();
-        }
-        [HttpPost]
-        public ActionResult Add([FromBody]CourseMain courseMain)
-        {
-            int id = _courseMainService.Add(courseMain);
-            return Created($"/api/course/{id}", null);
-        }
-        [HttpPut("{id}")]
-        public ActionResult Update([FromRoute]int id,[FromBody]CourseMain course)
-        {
-            _courseMainService.Update(id, course);
+            _quizService.Update(quizId, quizDto);
             return Ok();
         }
-        */
+
+        [HttpDelete("{quizId}")]
+        public ActionResult Delete([FromRoute] int quizId)
+        {
+            _quizService.Delete(quizId);
+            return NoContent();
+        }
     }
 }

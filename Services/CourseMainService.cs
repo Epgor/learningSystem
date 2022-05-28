@@ -23,14 +23,20 @@ namespace learningSystem.Services
 
         private readonly IAuthorizationService _authorizationService;
         private readonly IUserContextService _userContextService;
+        private readonly IArticleService _articleService;
+        private readonly IQuizService _quizService;
 
         public CourseMainService(LearningSystemDbContext dbContext, IMapper mapper,
-            IAuthorizationService authorizationService, IUserContextService userContextService)
+            IAuthorizationService authorizationService, IUserContextService userContextService,
+            IQuizService quizService, IArticleService articleService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _authorizationService = authorizationService;
             _userContextService = userContextService;
+
+            _quizService = quizService;
+            _articleService = articleService;
         }
         public List<CourseMain> GetAll()
         {
@@ -70,6 +76,26 @@ namespace learningSystem.Services
 
             if (course is null)
                 throw new NotFoundException("Course not found");
+
+            var articles = _dbContext
+                .Articles
+                .Where(r => r.Id == course.Id);
+
+            foreach(var article in articles)
+            {
+                _articleService.Delete(article.Id);
+            }
+
+            var quizes = _dbContext
+                .Quizes
+                .Where(r => r.Id == course.Id);
+
+            foreach(var quiz in quizes)
+            {
+                _quizService.Delete(quiz.Id);
+            }
+
+
 
             //authorize 
 
