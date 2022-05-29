@@ -15,6 +15,9 @@ namespace learningSystem.Services
         public void Delete(int id);
         public int Add(int courseId, QuizDto quizDto);
 
+        public int AddQuestion(int quizId, QuestionDto questionDto);
+        public void DeleteQuestion(int questionId);
+        public void UpdateQuestion(int questionId, QuestionDto questionDto);
     }
 
     public class QuizService : IQuizService
@@ -33,6 +36,93 @@ namespace learningSystem.Services
             _authorizationService = authorizationService;
             _userContextService = userContextService;
         }
+
+        public void UpdateQuestion(int questionId, QuestionDto questionDto)
+        {
+            var question = _dbContext
+                .Questions
+                .First(x => x.Id == questionId);
+
+            if (question == null)
+                throw new NotFoundException("No Question");
+
+            question.Text = questionDto.questionText;
+            /*
+            var answers = _dbContext
+                .Answers
+                .Where(x => x.questionId == questionId);
+
+            foreach(var answer in answers)
+            {
+                answer.Text = "idk";
+            }
+            */
+            _dbContext.SaveChanges();
+        }
+        public void DeleteQuestion(int questionId)
+        {
+            var question = _dbContext
+                .Questions
+                .First(x => x.Id == questionId);
+
+            if (question == null)
+                throw new NotFoundException("No Question");
+
+            var answers = _dbContext
+                .Answers
+                .Where(quest => quest.questionId == question.Id);
+
+            _dbContext.Questions.Remove(question);
+
+            foreach(var answer in answers)
+            {
+                _dbContext.Answers.Remove(answer);
+            }
+
+            _dbContext.SaveChanges();
+
+        }
+        public int AddQuestion(int quizId, QuestionDto questionDto)
+        {
+
+            var _quiz = _dbContext
+                .Quizes
+                .FirstOrDefault(c => c.Id == quizId);
+            if (_quiz == null)
+            {
+                throw new NotFoundException("No Quiz");
+            }
+
+            var questionTemp = new Question()
+            {
+                Text = questionDto.questionText,
+                quiz = _quiz,
+            };
+
+            _dbContext.Questions.Add(questionTemp);
+
+            foreach (var answer in questionDto.answers)
+            {
+                var answerTemp = new Answer()
+                {
+                    Text = answer.text,
+                    //IsCorrect = answer.IsChecked != null && (bool)answer.IsChecked ? true : false // nie czytelne
+                    question = questionTemp,
+                };
+                if (answer.IsChecked != null && (bool)answer.IsChecked)//niepuste i zaznaczone
+                {
+                    answerTemp.IsCorrect = true;
+                }
+                else
+                {
+                    answerTemp.IsCorrect = false;
+                }
+                _dbContext.Answers.Add(answerTemp);
+            }
+            _dbContext.SaveChanges();
+            return questionTemp.Id;
+        }
+
         public int Add(int courseId, QuizDto quizDto)
         {
             if (quizDto is null)
