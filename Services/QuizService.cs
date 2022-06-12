@@ -14,7 +14,7 @@ namespace learningSystem.Services
         public void Update(int id, QuizDto quizDto);
         public void Delete(int id);
         public int Add(int courseId, QuizDto quizDto);
-
+        public QuizDto GetQuiz(int id);
         public int AddQuestion(int quizId, QuestionDto questionDto);
         public void DeleteQuestion(int questionId);
         public void UpdateQuestion(int questionId, QuestionDto questionDto);
@@ -35,6 +35,19 @@ namespace learningSystem.Services
             _mapper = mapper;
             _authorizationService = authorizationService;
             _userContextService = userContextService;
+        }
+        public QuizDto GetQuiz(int id)
+        {
+            var quiz = _dbContext
+                .Quizes
+                .FirstOrDefault(artic => artic.Id == id);
+
+            if (quiz == null)
+                throw new NotFoundException("Nima kłiza");
+
+            var quizDto = _mapper.Map<QuizDto>(quiz);
+
+            return quizDto;
         }
 
         public void UpdateQuestion(int questionId, QuestionDto questionDto)
@@ -73,13 +86,15 @@ namespace learningSystem.Services
                 .Where(quest => quest.questionId == question.Id);
 
             _dbContext.Questions.Remove(question);
+            _dbContext.SaveChanges();
 
-            foreach(var answer in answers)
+            foreach (var answer in answers)
             {
                 _dbContext.Answers.Remove(answer);
+                _dbContext.SaveChanges();
             }
+            
 
-            _dbContext.SaveChanges();
 
         }
         public int AddQuestion(int quizId, QuestionDto questionDto)
@@ -182,6 +197,7 @@ namespace learningSystem.Services
                 if (question.Text is not null)
                 {
                     QuestionDto tempQuestionDto = new QuestionDto();
+                    tempQuestionDto.QuestionId = question.Id;
                     tempQuestionDto.questionText = question.Text;
 
                     List<Answer> answers = _dbContext
@@ -291,9 +307,15 @@ namespace learningSystem.Services
                         .Where(answer => answer.questionId == question.Id);
 
                     if (answers is not null)
+                    {
                         _dbContext.Answers.RemoveRange(answers);//delete answers of that question
+                        _dbContext.SaveChanges();
+                    }
+                        
                 }
+
                 _dbContext.Questions.RemoveRange(questions);//delete questions of that quiz
+                _dbContext.SaveChanges();
             }
                 
 

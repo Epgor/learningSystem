@@ -16,11 +16,20 @@ namespace learningSystem.Controllers
             _articleService = articleService;
         }
 
+
+
         [HttpPost("{courseId}")]
         public ActionResult Create([FromRoute] int courseId, [FromBody] ArticleDto articleDto)
         {
             int id = _articleService.Add(courseId, articleDto);
             return Created($"/api/article/{id}", null);
+        }
+
+        [HttpGet("get/{id}")]
+        public ActionResult<ArticleDto> Get([FromRoute] int id)
+        {
+            var article = _articleService.GetArticle(id);
+            return Ok(article);
         }
 
         [HttpGet("{id}")]

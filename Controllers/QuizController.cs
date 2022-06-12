@@ -58,6 +58,12 @@ namespace learningSystem.Controllers
             int id= _quizService.Add(courseId, quizDto);
             return Created($"/api/quiz/{id}", null);
         }
+        [HttpGet("get/{id}")]
+        public ActionResult<QuizDto> Get([FromRoute] int id)
+        {
+            var quiz = _quizService.GetQuiz(id);
+            return Ok(quiz);
+        }
         [HttpGet("{courseId}")]
         public ActionResult<List<QuizDto>> GetAll([FromRoute] int courseId)
         {

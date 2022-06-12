@@ -26,6 +26,9 @@ namespace learningSystem.Entities
 
         public DbSet<ArticleBlock> ArticleBlocks { get; set; }
 
+        public DbSet<Forum> Forums { get; set; }
+        public DbSet<Post> Posts { get; set; }
+
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

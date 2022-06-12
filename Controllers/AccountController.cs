@@ -14,7 +14,7 @@ namespace learningSystem.Controllers
     [Route("api/account")]
     [ApiController]
     [Authorize]
-    
+    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -22,6 +22,19 @@ namespace learningSystem.Controllers
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
+        }
+
+        [HttpPut("name/{id}/{name}")]
+        public ActionResult ChangeName([FromRoute] int id, [FromRoute]string name)
+        {
+            _accountService.ChangeName(id, name);
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser([FromRoute]int id)
+        {
+            _accountService.DeleteUser(id);
+            return Ok();
         }
 
         [HttpPost("register")]

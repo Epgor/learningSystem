@@ -1,0 +1,91 @@
+[
+  {
+    "questionText": "Pierwsze pytanie HTML q1",
+    "answers": [
+      {
+        "text": "Dobra odpowiedz 1/1",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 1/2",
+        "isChecked": true
+      },
+      {
+        "text": "Dobra odpowiedz 1/3",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 1/4",
+        "isChecked": null
+      },
+      {
+        "text": "Dobra odpowiedz 1/5",
+        "isChecked": null
+      }
+    ]
+  },
+  {
+    "questionText": "Drugie pytanie HTML q1",
+    "answers": [
+      {
+        "text": "Dobra odpowiedz 2/1",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 2/2",
+        "isChecked": true
+      },
+      {
+        "text": "Dobra odpowiedz 2/3",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 2/4",
+        "isChecked": null
+      }
+    ]
+  },
+  {
+    "questionText": "Trzecie pytanie HTML q1",
+    "answers": [
+      {
+        "text": "Dobra odpowiedz 3/1",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 3/2",
+        "isChecked": null
+      },
+      {
+        "text": "Dobra odpowiedz 3/3",
+        "isChecked": null
+      }
+    ]
+  },
+  {
+    "questionText": "Czwarte pytanie HTML q1",
+    "answers": [
+      {
+        "text": "Dobra odpowiedz 4/1",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 4/2",
+        "isChecked": null
+      }
+    ]
+  },
+  {
+    "questionText": "Piąte pytanie HTML q1",
+    "answers": [
+      {
+        "text": "Dobra odpowiedz 5/1",
+        "isChecked": true
+      },
+      {
+        "text": "Zla odpowiedz 5/2",
+        "isChecked": null
+      }
+    ]
+  }
+]

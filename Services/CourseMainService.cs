@@ -85,6 +85,7 @@ namespace learningSystem.Services
             {
                 _articleService.Delete(article.Id);
             }
+            _dbContext.SaveChanges();
 
             var quizes = _dbContext
                 .Quizes
@@ -94,6 +95,7 @@ namespace learningSystem.Services
             {
                 _quizService.Delete(quiz.Id);
             }
+            _dbContext.SaveChanges();
 
 
 

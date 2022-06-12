@@ -25,6 +25,8 @@ namespace learningSystem.Services
         List<UserDto> GetUsers();
         public void SetLearinngType(int userId, int typeId);
         public int GetLearinngType(int id);
+        public void DeleteUser(int userId);
+        public void ChangeName(int userId, string name);
 
     }
     public class AccountService : IAccountService
@@ -178,6 +180,32 @@ namespace learningSystem.Services
             user.LearingType = typeId;
             _context.SaveChanges();
 
+        }
+
+        public void DeleteUser(int userId)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(c => c.Id == userId);
+
+            if (user is null)
+                throw new NotFoundException("brak");
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
+
+        public void ChangeName(int userId, string name)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(c => c.Id == userId);
+
+            if (user is null)
+                throw new NotFoundException("brak");
+
+            user.Name = name;
+            _context.SaveChanges();
         }
     }
 }

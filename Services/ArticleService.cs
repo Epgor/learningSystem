@@ -10,7 +10,7 @@ namespace learningSystem.Services
     {
         public List<ArticleDto> GetAll(int id);
         public List<ArticleBlockDto> GetArticleBlocks(int articleId);
-
+        public ArticleDto GetArticle(int id);
         public void Update(int id, ArticleDto articleDto);
         public void Delete(int id);
         public int Add(int courseId, ArticleDto articleDto);
@@ -36,6 +36,19 @@ namespace learningSystem.Services
             _mapper = mapper;
             _authorizationService = authorizationService;
             _userContextService = userContextService;
+        }
+        public ArticleDto GetArticle(int id)
+        {
+            var article = _dbContext
+                .Articles
+                .FirstOrDefault(artic => artic.Id == id);
+
+            if (article == null)
+                throw new NotFoundException("Nima artykuła");
+
+            var articleDto = _mapper.Map<ArticleDto>(article);
+
+            return articleDto;
         }
         public void UpdateBlock(ArticleBlockDto articleBlockDto)
         {
@@ -96,7 +109,7 @@ namespace learningSystem.Services
                 query = articleBlockDto.query,
                 Article = article,
             };
-
+            _dbContext.ArticleBlocks.Add(articleBlock);
             _dbContext.SaveChanges();
             return articleBlock.id;
         }
@@ -168,8 +181,10 @@ namespace learningSystem.Services
                 .Where(block => block.ArticleId == article.Id);
 
             if (blocks is not null)
+            {
                 _dbContext.ArticleBlocks.RemoveRange(blocks);//delete blocks of that article
-
+                _dbContext.SaveChanges();
+            }
             _dbContext.Articles.Remove(article);//delete article         
             _dbContext.SaveChanges();
         }
@@ -182,6 +197,7 @@ namespace learningSystem.Services
                 throw new NotFoundException("Article Not Found");
 
             article.Text = articleDto.text;
+            article.LearningType = articleDto.learningType;
 
             _dbContext.SaveChanges();
         }

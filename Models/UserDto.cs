@@ -9,5 +9,6 @@ namespace learningSystem.Models
         public string Name { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Role { get; set; }
+        public int LearingType { get; set; }
     }
 }
